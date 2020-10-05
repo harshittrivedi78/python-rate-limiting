@@ -12,7 +12,7 @@ from throttling import rate_limiter, Rat
 class UserAPIView(generics.RetrieveAPIView):
     
     @rate_limiter(namespace="user", resource="post" , interval=1, max_requests=2000, unit=RateLimitUnit.HOUR)
-    def retrieve(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs):
         data = {}
         return Response(data, status=status.HTTP_200_OK)
 ```
@@ -24,7 +24,7 @@ from throttling import rate_limiter, Rat
 
 class UserAPIView(generics.RetrieveAPIView):
     
-    def retrieve(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs):
         with rate_limiter(namespace="user", resource="post" , interval=1, max_requests=2000, unit=RateLimitUnit.HOUR)
             data = {}
             return Response(data, status=status.HTTP_200_OK)
